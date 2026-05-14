@@ -1,0 +1,61 @@
+export const FITDINO_VERSION = '2026-04-16_1';
+export const LS_BEST = 'fitdino:bestScore';
+export const MAX_LIVES = 3;
+
+export const LEVELS = [
+  {
+    threshold: 0,
+    name: 'Lusta dínó',
+    speedMul: 0.84,
+    gapMul: 1.14,
+    sizeMul: 0.94,
+    color: '94,234,212',
+    passPoints: 5,
+    redCactusPoints: 50,
+    brickPoints: 5,
+  },
+  {
+    threshold: 500,
+    name: 'Fürge dínó',
+    speedMul: 0.97,
+    gapMul: 1.05,
+    sizeMul: 1.00,
+    color: '120,208,255',
+    passPoints: 10,
+    redCactusPoints: 100,
+    brickPoints: 10,
+  },
+  {
+    threshold: 1500,
+    name: 'Sprint raptor',
+    speedMul: 1.10,
+    gapMul: 0.97,
+    sizeMul: 1.05,
+    color: '255,214,102',
+    passPoints: 20,
+    redCactusPoints: 200,
+    brickPoints: 20,
+  },
+  {
+    threshold: 3500,
+    name: 'Villámkarmos',
+    speedMul: 1.22,
+    gapMul: 0.90,
+    sizeMul: 1.09,
+    color: '255,159,67',
+    passPoints: 50,
+    redCactusPoints: 500,
+    brickPoints: 50,
+  },
+  {
+    threshold: 8000,
+    name: 'Meteorfutó',
+    speedMul: 1.36,
+    gapMul: 0.84,
+    sizeMul: 1.12,
+    color: '255,92,122',
+    passPoints: 100,
+    redCactusPoints: 1000,
+    brickPoints: 100,
+  },
+];

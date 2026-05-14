@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitDino</title>
+  <meta name="description" content="Egyszerű dínós ugrálós játék — akadályokkal, szintekkel és 3 élettel." />
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="apple-touch-icon" href="assets/images/logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <img class="logo" src="assets/images/logo.png" alt="FitDino logó" />
+        <div class="titles">
+          <div class="title">FitDino</div>
+          <div class="subtitle">Fel nyíl = ugrás • 3 élet • random akadályok • piros kaktuszok • téglabónusz</div>
+        </div>
+      </div>
+
+      <div class="hud">
+        <div class="hud-item" id="scoreBox">
+          <span class="hud-label">Pont</span>
+          <span class="hud-value" id="score">0</span>
+        </div>
+        <div class="hud-item hud-item-level" id="levelBox">
+          <span class="hud-label">Szint</span>
+          <span class="hud-value hud-value-level" id="level">1. Lusta dínó</span>
+        </div>
+        <div class="hud-item" id="bestBox">
+          <span class="hud-label">Rekord</span>
+          <span class="hud-value" id="best">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Élet</span>
+          <span class="hud-value" id="lives">❤️❤️❤️</span>
+        </div>
+
+        <button class="icon-btn" id="btnFullscreen" type="button" title="Teljes képernyő" aria-label="Teljes képernyő">
+          ⛶
+        </button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="game" aria-label="FitDino játék vászon"></canvas>
+
+        <div class="overlay" id="overlay">
+          <div class="card">
+            <h1 id="overlayTitle">FitDino</h1>
+            <p id="overlayText">
+              Nyomd a <b>Fel</b> nyilat (↑) a kezdéshez és az ugráshoz.<br/>
+              Mobilon: <b>tapints</b> egyet a pályára.
+            </p>
+            <div class="row">
+              <button class="btn primary" id="btnStart" type="button">Kezdés</button>
+              <button class="btn" id="btnHow" type="button">Irányítás</button>
+            </div>
+            <div class="help" id="help">
+              <ul>
+                <li><b>↑</b> vagy <b>Space</b>: ugrás</li>
+                <li><b>R</b>: újraindítás (Game Over után)</li>
+                <li><b>P</b>: szünet / folytatás</li>
+                <li>Szintek: <b>Lusta dínó</b> → <b>Fürge dínó</b> → <b>Sprint raptor</b> → <b>Villámkarmos</b> → <b>Meteorfutó</b></li>
+                <li>A pontszám most lassabban nő: főleg átugrásból, piros kaktuszból és téglafejelésből jön</li>
+                <li>Normál akadály: <b>5 / 10 / 20 / 50 / 100</b> pont szinttől függően</li>
+                <li>Piros kaktusz: <b>50 / 100 / 200 / 500 / 1000</b> pont szinttől függően</li>
+                <li>Fejjel megütött tégla is pontot ad</li>
+                <li>Ha nekimész: -1 élet, rövid védettség, mehetsz tovább</li>
+                <li>Rekord: localStorage-ban mentve</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="footer">
+        <span>Telepítés: másold a mappát ide: <code>/public_html/FitDino</code> és nyisd meg: <code>/FitDino/</code></span>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module" src="assets/js/game.js?v=20260416_1"></script>
+</body>
+</html>

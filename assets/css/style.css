@@ -101,8 +101,65 @@ canvas{
   color:var(--muted);
   font-size:12.5px;
   padding:0 6px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  text-align:center;
 }
+.footer a,
+.privacy-link{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.footer a:hover,
+.privacy-link:hover{color:#fff}
+.footer-separator{opacity:.7}
 code{color:var(--accent)}
+
+.privacy-storage-notice{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  width:100%;
+  margin:0 0 12px;
+  padding:10px 16px;
+  border-radius:16px;
+  background:#0d1b2a;
+  color:#f3f7fb;
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 2px 10px rgba(0,0,0,.16);
+  font-size:.9rem;
+  line-height:1.42;
+}
+.privacy-storage-notice[hidden]{display:none!important;}
+.privacy-storage-notice__text{flex:1 1 auto;}
+.privacy-storage-notice__text a{
+  color:#ffd76a;
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.privacy-storage-notice__button{
+  flex:0 0 auto;
+  min-width:90px;
+  padding:7px 14px;
+  border:0;
+  border-radius:999px;
+  background:#d6b45c;
+  color:#1b1b1b;
+  font-weight:700;
+  cursor:pointer;
+}
+.privacy-storage-notice__button:hover,
+.privacy-storage-notice__button:focus-visible{
+  filter:brightness(1.06);
+  outline:2px solid rgba(255,215,106,.45);
+  outline-offset:2px;
+}
 
 .overlay{
   position:absolute;
@@ -186,6 +243,15 @@ code{color:var(--accent)}
   .canvas-wrap{border-radius:16px}
   canvas{ height: min(52vh, 360px); }
   .footer{font-size:11.5px}
+  .privacy-storage-notice{
+    flex-direction:column;
+    align-items:stretch;
+    gap:8px;
+    font-size:.86rem;
+    border-radius:14px;
+    padding:10px;
+  }
+  .privacy-storage-notice__button{width:100%;}
 }
 
 @media (max-width:420px){

@@ -10,6 +10,8 @@ A **FitDino** egy egyszerű, magyar nyelvű, dínós ugrálós webjáték. A já
 - Random generált akadályok
 - 3 élet: az első ütközés után még 2 próbálkozás marad
 - Pontszám, szintek és rekord mentése localStorage-ban
+- Adatvédelmi irányelvek footer link
+- Felső adatvédelmi és cookie/helyi tárolási tájékoztató sáv
 - Adatbázis nélküli működés
 
 ## Telepítési hely
@@ -17,13 +19,13 @@ A **FitDino** egy egyszerű, magyar nyelvű, dínós ugrálós webjáték. A já
 A webapp éles helye:
 
 ```text
-/public_html/FitDino
+/public_html/fitdino
 ```
 
 cPanel szerverútvonallal:
 
 ```text
-/home/zenitpr1/public_html/FitDino/
+/home/zenitpr1/public_html/fitdino/
 ```
 
 ## Projektstruktúra
@@ -41,10 +43,26 @@ cPanel szerverútvonallal:
     │   └── logo.png
     └── js/
         ├── game.js
+        ├── privacy-notice.js
         └── fitdino/
             ├── constants.js
             ├── renderer.js
             └── utils.js
+```
+
+## Adatvédelem és helyi tárolás
+
+A FitDino statikus játék, adatbázist és saját backendet nem használ. A játék a működéshez szükséges böngészőoldali tárolást használ:
+
+- `localStorage`: rekord mentése, valamint az adatvédelmi/helyi tárolási tájékoztató tudomásulvételének megőrzése.
+- Technikai cookie: az adatvédelmi/helyi tárolási tájékoztató tudomásulvételének megőrzése.
+
+A tájékoztató sáv nem marketing-cookie hozzájárulás, hanem működési tájékoztatás tudomásulvétele. Analytics, reklám-cookie vagy marketing célú engedélyezési logika nem kerülhet bele.
+
+A publikus adatvédelmi irányelvek linkje:
+
+```text
+https://www.zenitprograms.hu/?page_id=226
 ```
 
 ## Futtatás lokálisan
@@ -69,9 +87,27 @@ A repó gyökerében található `.cpanel.yml` fájl végzi a deploy-t:
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/zenitpr1/public_html/FitDino/
+    - export DEPLOYPATH=/home/zenitpr1/public_html/fitdino/
     - /bin/mkdir -p "$DEPLOYPATH"
-    - /bin/rsync -av --delete --exclude='.git' --exclude='.github' --exclude='.cpanel.yml' --exclude='.cPanel.yaml' --exclude='AGENTS.md' --exclude='README.md' --exclude='patch_liras.md' ./ "$DEPLOYPATH"
+    - >
+      /bin/rsync -av --delete --delete-after
+      --exclude='.git/'
+      --exclude='.github/'
+      --exclude='*.zip'
+      --exclude='*.yml'
+      --exclude='*.yaml'
+      --exclude='*.csv'
+      --exclude='*.md'
+      --exclude='*.sql'
+      --exclude='uploads/'
+      --exclude='_backup/'
+      --exclude='backup/'
+      --exclude='backups/'
+      --exclude='tmp/'
+      --exclude='cache/'
+      --exclude='logs/'
+      ./
+      "$DEPLOYPATH/"
 ```
 
 A deploy `rsync --delete` használatával működik, ezért a repóból törölt fájlok az éles célmappából is törlődnek.
@@ -83,4 +119,6 @@ A deploy `rsync --delete` használatával működik, ezért a repóból törölt
 - Ne kerüljön be nagy külső framework.
 - Maradjon gyors, egyszerű, mobilon is használható játék.
 - A felhasználói felület magyar nyelvű legyen.
+- Az adatvédelmi/footer link és a felső tájékoztató sáv maradjon üzleti logikától mentes.
+- A tájékoztató sáv csak működéshez szükséges sütikről és helyi böngészőtárolásról szólhat.
 - Patch ZIP készítéskor csak az új és módosított fájlok kerüljenek a csomagba.

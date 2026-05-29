@@ -6,8 +6,8 @@ A FitDino egy egyszerű, adatbázis nélküli HTML/CSS/JavaScript webjáték. A 
 
 ## Éles webhely
 
-- Szerver oldali célmappa: `/home/zenitpr1/public_html/FitDino/`
-- Publikus útvonal: `public_html/FitDino`
+- Szerver oldali célmappa: `/home/zenitpr1/public_html/fitdino/`
+- Publikus útvonal: `public_html/fitdino`
 - Adatbázis: nincs
 - Backend: nincs
 - Fő belépési pont: `index.html`
@@ -18,6 +18,7 @@ A FitDino egy egyszerű, adatbázis nélküli HTML/CSS/JavaScript webjáték. A 
 - Külső build folyamat nincs
 - Composer, npm, Node build és adatbázis-migráció nem szükséges
 - A játék logikája jelenleg az `assets/js/game.js` és az `assets/js/fitdino/` fájlokban található
+- Az adatvédelmi tájékoztató logikája az `assets/js/privacy-notice.js` fájlban található
 - A stílusok az `assets/css/style.css` fájlban találhatók
 - Képi elemek: `assets/images/`
 
@@ -36,6 +37,7 @@ A FitDino egy egyszerű, adatbázis nélküli HTML/CSS/JavaScript webjáték. A 
     │   └── logo.png
     └── js/
         ├── game.js
+        ├── privacy-notice.js
         └── fitdino/
             ├── constants.js
             ├── renderer.js
@@ -45,7 +47,7 @@ A FitDino egy egyszerű, adatbázis nélküli HTML/CSS/JavaScript webjáték. A 
 ## Fejlesztési szabályok
 
 1. Az alkalmazás maradjon adatbázis nélküli, statikus webapp.
-2. A publikus célmappa mindig `/public_html/FitDino`.
+2. A publikus célmappa mindig `/public_html/fitdino`.
 3. A felhasználói szövegek magyar nyelvűek legyenek.
 4. A játék maradjon egyszerűen használható: fel nyíl / Space / mobil érintés.
 5. A dínónak 3 élete van; ütközés után ne azonnal legyen vége a játéknak, hanem csak a harmadik ütközés után.
@@ -54,10 +56,12 @@ A FitDino egy egyszerű, adatbázis nélküli HTML/CSS/JavaScript webjáték. A 
 8. Ne kerüljön be felesleges framework vagy nagy külső függőség.
 9. Patch készítéskor csak az új és módosított fájlok kerüljenek a ZIP-be, projektgyökérhez igazodó relatív útvonalakkal.
 10. Patch ZIP esetén legyen `patch_liras.md` fájl is, amely röviden összefoglalja a módosításokat.
+11. Az adatvédelmi irányelvek footer linkje maradjon a ZenitPrograms publikus adatvédelmi oldalára mutató egyszerű hivatkozás.
+12. A felső adatvédelmi tájékoztató sáv a `.topbar` fölött jelenjen meg.
 
 ## cPanel deploy szabály
 
-A cPanel Git deploy a `.cpanel.yml` fájlt használja. A deploy folyamat `rsync --delete` paranccsal szinkronizál a célmappába, ezért ha a repóból fájl vagy mappa törlődik, az az éles `public_html/FitDino` mappából is törlődik.
+A cPanel Git deploy a `.cpanel.yml` fájlt használja. A deploy folyamat `rsync --delete` paranccsal szinkronizál a célmappába, ezért ha a repóból fájl vagy mappa törlődik, az az éles `public_html/fitdino` mappából is törlődik.
 
 A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webmappába:
 
@@ -77,4 +81,6 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 - Ütközéskor életlevonás történik.
 - Három ütközés után Game Over állapot jelenik meg.
 - A rekord mentése localStorage-ban működik.
-- cPanel deploy után a fájlok a `/public_html/FitDino` mappában jelennek meg.
+- Az adatvédelmi tájékoztató sáv megjelenik a topbar fölött.
+- A footerben megjelenik az Adatvédelmi irányelvek link.
+- cPanel deploy után a fájlok a `/public_html/fitdino` mappában jelennek meg.

@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FitDino</title>
-  <meta name="description" content="Egyszerű dínós ugrálós játék — akadályokkal, szintekkel és 3 élettel." />
+  <meta name="description" content="Egyszerű dínós ugrálós játék — akadályokkal, szintekkel, 3 élettel és tatamis mini-játékkal." />
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
   <link rel="apple-touch-icon" href="assets/images/logo.png" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260620_1" />
 </head>
 <body>
   <div class="app">
@@ -16,7 +16,7 @@
         <img class="logo" src="assets/images/logo.png" alt="FitDino logó" />
         <div class="titles">
           <div class="title">FitDino</div>
-          <div class="subtitle">Fel nyíl = ugrás • 3 élet • random akadályok • piros kaktuszok • téglabónusz</div>
+          <div class="subtitle">Fel nyíl = ugrás • 3 élet • random akadályok • piros kaktuszok • téglabónusz • tatami mini-játék</div>
         </div>
       </div>
 
@@ -44,6 +44,11 @@
       </div>
     </header>
 
+    <nav class="mode-switch" aria-label="FitDino játékmódok">
+      <a class="mode-link active" href="index.html" aria-current="page">Ugrálós játék</a>
+      <a class="mode-link" href="tatami.html">Tatami harc</a>
+    </nav>
+
     <main class="stage">
       <div class="canvas-wrap" id="canvasWrap">
         <canvas id="game" aria-label="FitDino játék vászon"></canvas>
@@ -58,6 +63,7 @@
             <div class="row">
               <button class="btn primary" id="btnStart" type="button">Kezdés</button>
               <button class="btn" id="btnHow" type="button">Irányítás</button>
+              <a class="btn" href="tatami.html">Tatami harc</a>
             </div>
             <div class="help" id="help">
               <ul>
@@ -71,6 +77,7 @@
                 <li>Fejjel megütött tégla is pontot ad</li>
                 <li>Ha nekimész: -1 élet, rövid védettség, mehetsz tovább</li>
                 <li>Rekord: localStorage-ban mentve</li>
+                <li>Külön mini-játék: <b>Tatami harc</b>, ahol FitDino a Kung-Fu Teknőssel méri össze magát</li>
               </ul>
             </div>
           </div>

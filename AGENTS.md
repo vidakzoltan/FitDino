@@ -4,6 +4,8 @@
 
 A FitDino egy egyszerű, adatbázis nélküli HTML/CSS/JavaScript webjáték. A játék lényege, hogy a dínó a fel nyíllal vagy mobilon érintéssel ugrik, miközben random generált akadályok érkeznek vele szemben. Ütközéskor életet veszít, összesen 3 élete van, tehát az első ütközés után még 2 alkalommal próbálkozhat.
 
+Az alkalmazáson belül külön mini-játék irányként megjelent a Tatami próba is, ahol FitDino a Kung-Fu Teknőssel mérheti össze magát. A jelenlegi megvalósítás az `index.html` oldalon belüli `#tatamiMini` szekcióként működik, nem külön HTML oldalra mutató hivatkozásként.
+
 ## Éles webhely
 
 - Szerver oldali célmappa: `/home/zenitpr1/public_html/fitdino/`
@@ -58,6 +60,8 @@ A FitDino egy egyszerű, adatbázis nélküli HTML/CSS/JavaScript webjáték. A 
 10. Patch ZIP esetén legyen `patch_liras.md` fájl is, amely röviden összefoglalja a módosításokat.
 11. Az adatvédelmi irányelvek footer linkje maradjon a ZenitPrograms publikus adatvédelmi oldalára mutató egyszerű hivatkozás.
 12. A felső adatvédelmi tájékoztató sáv a `.topbar` fölött jelenjen meg.
+13. Tatami próba linkje statikus deploy esetén működő, létező célra mutasson. Ha nincs külön `tatami.html`, akkor az `index.html` oldalon belüli `#tatamiMini` szekciót kell használni.
+14. A játékmódválasztó gombok legyenek jól láthatók, kontrasztosak és mobilon is könnyen megnyomhatók.
 
 ## cPanel deploy szabály
 
@@ -83,4 +87,5 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 - A rekord mentése localStorage-ban működik.
 - Az adatvédelmi tájékoztató sáv megjelenik a topbar fölött.
 - A footerben megjelenik az Adatvédelmi irányelvek link.
+- A Tatami próba linkje létező célra mutat és látható gombként jelenik meg.
 - cPanel deploy után a fájlok a `/public_html/fitdino` mappában jelennek meg.

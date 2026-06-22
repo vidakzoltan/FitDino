@@ -7,7 +7,7 @@
   <meta name="description" content="Egyszerű dínós ugrálós játék — akadályokkal, szintekkel, 3 élettel és tatamis mini-játékkal." />
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
   <link rel="apple-touch-icon" href="assets/images/logo.png" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260620_1" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260620_2" />
 </head>
 <body>
   <div class="app">
@@ -46,7 +46,7 @@
 
     <nav class="mode-switch" aria-label="FitDino játékmódok">
       <a class="mode-link active" href="index.html" aria-current="page">Ugrálós játék</a>
-      <button class="mode-link" id="btnTatamiInline" type="button">Tatami próba</button>
+      <a class="mode-link mode-link-highlight" href="#tatamiMini">Tatami próba</a>
     </nav>
 
     <main class="stage">
@@ -63,7 +63,7 @@
             <div class="row">
               <button class="btn primary" id="btnStart" type="button">Kezdés</button>
               <button class="btn" id="btnHow" type="button">Irányítás</button>
-              <button class="btn" id="btnTatamiInlineCard" type="button">Tatami próba</button>
+              <a class="btn primary" href="#tatamiMini">Tatami próba</a>
             </div>
             <div class="help" id="help">
               <ul>
@@ -84,6 +84,18 @@
         </div>
 
       </div>
+
+      <section id="tatamiMini" class="tatami-panel" aria-label="Tatami próba">
+        <div class="tatami-copy">
+          <h1>FitDino vs. Kung-Fu Teknős</h1>
+          <p>A tatami mini-játék külön játékmódként indul. FitDino a taktikás Kung-Fu Teknőssel méri össze magát: jó ütem, figyelem és gyors reakció dönt.</p>
+        </div>
+        <div class="tatami-preview" aria-hidden="true">
+          <span class="tatami-character">FD</span>
+          <span class="tatami-vs">Tatami próba</span>
+          <span class="tatami-character turtle">KT</span>
+        </div>
+      </section>
 
       <footer class="footer">
         <span>Telepítés: másold a mappát ide: <code>/public_html/fitdino</code> és nyisd meg: <code>/fitdino/</code></span>

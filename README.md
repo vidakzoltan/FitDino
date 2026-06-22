@@ -10,6 +10,7 @@ A **FitDino** egy egyszerű, magyar nyelvű, dínós ugrálós webjáték. A já
 - Random generált akadályok
 - 3 élet: az első ütközés után még 2 próbálkozás marad
 - Pontszám, szintek és rekord mentése localStorage-ban
+- Tatami próba belépő: külön mini-játék előkészítése FitDino és Kung-Fu Teknős mérkőzéséhez
 - Adatvédelmi irányelvek footer link
 - Felső adatvédelmi és cookie/helyi tárolási tájékoztató sáv
 - Adatbázis nélküli működés
@@ -49,6 +50,12 @@ cPanel szerverútvonallal:
             ├── renderer.js
             └── utils.js
 ```
+
+## Tatami próba
+
+A Tatami próba az appon belüli külön mini-játék iránya. A jelenlegi változat az `index.html` oldalon működő, jól látható belépőt és előnézeti panelt ad. A panel célja, hogy FitDino külön játékmódban mérhesse össze magát a Kung-Fu Teknőssel.
+
+A link nem külön hiányzó HTML fájlra mutat, hanem az oldalon belüli `#tatamiMini` szekcióra, ezért statikus cPanel deploy mellett is működik.
 
 ## Adatvédelem és helyi tárolás
 

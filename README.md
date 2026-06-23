@@ -10,7 +10,7 @@ A **FitDino** egy egyszerű, magyar nyelvű, dínós ugrálós webjáték. A já
 - Random generált akadályok
 - 3 élet: az első ütközés után még 2 próbálkozás marad
 - Pontszám, szintek és rekord mentése localStorage-ban
-- Tatami próba belépő: külön mini-játék előkészítése FitDino és Kung-Fu Teknős mérkőzéséhez
+- Külön Tatami harc oldal FitDino és Kung-Fu Teknős működő mini-játékához
 - Adatvédelmi irányelvek footer link
 - Felső adatvédelmi és cookie/helyi tárolási tájékoztató sáv
 - Adatbázis nélküli működés
@@ -37,25 +37,36 @@ cPanel szerverútvonallal:
 ├── AGENTS.md
 ├── README.md
 ├── index.html
+├── tatami.html
 └── assets/
     ├── css/
-    │   └── style.css
+    │   ├── style.css
+    │   └── tatami.css
     ├── images/
     │   └── logo.png
     └── js/
         ├── game.js
         ├── privacy-notice.js
+        ├── tatami.js
         └── fitdino/
             ├── constants.js
             ├── renderer.js
             └── utils.js
 ```
 
-## Tatami próba
+## Tatami harc
 
-A Tatami próba az appon belüli külön mini-játék iránya. A jelenlegi változat az `index.html` oldalon működő, jól látható belépőt és előnézeti panelt ad. A panel célja, hogy FitDino külön játékmódban mérhesse össze magát a Kung-Fu Teknőssel.
+A Tatami harc az appon belüli külön mini-játék, külön `tatami.html` oldalon. Az `index.html` játékmódválasztója és a kezdő overlay gombja erre az oldalra mutat.
 
-A link nem külön hiányzó HTML fájlra mutat, hanem az oldalon belüli `#tatamiMini` szekcióra, ezért statikus cPanel deploy mellett is működik.
+A mini-játék oldalnézetes canvas-megjelenítést használ: FitDino és a Kung-Fu Teknős kirajzolt karakterként állnak a tatamin. A vezérlés működik billentyűzettel és mobil gombokkal is:
+
+- `← / →` vagy `A / D`: oldalazás
+- `↑` vagy `W`: blokk
+- `Space` vagy `K`: FitDino gyors mozdulata
+- `P`: szünet / folytatás
+- `R`: új mérkőzés
+
+A Tatami harc nem használ adatbázist és nem igényel külső frameworköt.
 
 ## Adatvédelem és helyi tárolás
 
@@ -84,6 +95,12 @@ Ezután böngészőben:
 
 ```text
 http://localhost:8080
+```
+
+A Tatami harc oldal:
+
+```text
+http://localhost:8080/tatami.html
 ```
 
 ## cPanel deploy

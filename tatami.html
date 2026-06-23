@@ -1,10 +1,101 @@
 <!doctype html>
 <html lang="hu">
 <head>
-  <meta charset="utf-8">
-  <title>FitDino Tatami</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitDino – Tatami harc</title>
+  <meta name="description" content="FitDino külön tatami mini-játéka Kung-Fu Teknős ellen oldalnézetes karakterekkel és működő vezérléssel." />
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="apple-touch-icon" href="assets/images/logo.png" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260623_1" />
+  <link rel="stylesheet" href="assets/css/tatami.css?v=20260623_1" />
 </head>
 <body>
-  <h1>FitDino Tatami</h1>
+  <div class="app tatami-app">
+    <header class="topbar">
+      <div class="brand">
+        <img class="logo" src="assets/images/logo.png" alt="FitDino logó" />
+        <div class="titles">
+          <div class="title">FitDino – Tatami harc</div>
+          <div class="subtitle">Oldalnézetes mini-játék • FitDino vs. Kung-Fu Teknős • ritmus, blokk és pontos mozdulat</div>
+        </div>
+      </div>
+
+      <div class="hud tatami-hud">
+        <div class="hud-item">
+          <span class="hud-label">FitDino</span>
+          <span class="hud-value" id="tatamiDinoHp">100%</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Kung-Fu Teknős</span>
+          <span class="hud-value" id="tatamiTurtleHp">100%</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Pont</span>
+          <span class="hud-value" id="tatamiScore">0</span>
+        </div>
+        <button class="icon-btn" id="btnTatamiFullscreen" type="button" title="Teljes képernyő" aria-label="Teljes képernyő">⛶</button>
+      </div>
+    </header>
+
+    <nav class="mode-switch" aria-label="FitDino játékmódok">
+      <a class="mode-link" href="index.html">Ugrálós játék</a>
+      <a class="mode-link active mode-link-highlight" href="tatami.html" aria-current="page">Tatami harc</a>
+    </nav>
+
+    <main class="stage tatami-stage">
+      <section class="tatami-intro" aria-label="Tatami harc rövid leírás">
+        <div>
+          <h1>Kung-Fu Teknős kihívása</h1>
+          <p>FitDino a tatamin oldalnézetben áll szemben a taktikás teknőssel. A játék működő külön oldal: mozogni, blokkolni és jó ütemben támadni lehet.</p>
+        </div>
+        <a class="btn" href="index.html">Vissza az ugrálós játékhoz</a>
+      </section>
+
+      <div class="canvas-wrap tatami-canvas-wrap" id="tatamiWrap">
+        <canvas id="tatamiGame" aria-label="FitDino Tatami harc játék vászon"></canvas>
+
+        <div class="overlay" id="tatamiOverlay">
+          <div class="card tatami-card">
+            <h1 id="tatamiOverlayTitle">Tatami harc</h1>
+            <p id="tatamiOverlayText">
+              FitDino és Kung-Fu Teknős oldalnézetes mérkőzése.<br/>
+              Mozgás: <b>← / →</b> vagy <b>A / D</b>. Blokk: <b>↑</b> vagy <b>W</b>. Mozdulat: <b>Space</b> vagy <b>K</b>.
+            </p>
+            <div class="row">
+              <button class="btn primary" id="btnTatamiStart" type="button">Kezdés</button>
+              <button class="btn" id="btnTatamiHow" type="button">Irányítás</button>
+            </div>
+            <div class="help" id="tatamiHelp">
+              <ul>
+                <li><b>← / →</b> vagy <b>A / D</b>: FitDino oldalazása a tatamin</li>
+                <li><b>↑</b> vagy <b>W</b>: blokk, ami csökkenti a teknős támadásának hatását</li>
+                <li><b>Space</b> vagy <b>K</b>: FitDino gyors mozdulata</li>
+                <li><b>P</b>: szünet / folytatás</li>
+                <li><b>R</b>: új mérkőzés</li>
+                <li>A teknős kivár, blokkol, közelít és páncélos rohammal próbálkozik.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tatami-mobile-controls" aria-label="Mobil tatami vezérlők">
+        <button class="tatami-control" type="button" data-control="left">← Balra</button>
+        <button class="tatami-control" type="button" data-control="block">Blokk</button>
+        <button class="tatami-control primary" type="button" data-control="strike">Mozdulat</button>
+        <button class="tatami-control" type="button" data-control="right">Jobbra →</button>
+      </div>
+
+      <footer class="footer">
+        <span>Külön mini-játék: <code>FitDino Tatami harc</code></span>
+        <span class="footer-separator" aria-hidden="true">•</span>
+        <a class="privacy-link" href="https://www.zenitprograms.hu/?page_id=226" target="_blank" rel="noopener noreferrer">Adatvédelmi irányelvek</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="assets/js/privacy-notice.js?v=20260529_1"></script>
+  <script src="assets/js/tatami.js?v=20260623_1" defer></script>
 </body>
 </html>

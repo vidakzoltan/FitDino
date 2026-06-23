@@ -4,7 +4,7 @@
 
 A FitDino egy egyszerű, adatbázis nélküli HTML/CSS/JavaScript webjáték. A játék lényege, hogy a dínó a fel nyíllal vagy mobilon érintéssel ugrik, miközben random generált akadályok érkeznek vele szemben. Ütközéskor életet veszít, összesen 3 élete van, tehát az első ütközés után még 2 alkalommal próbálkozhat.
 
-Az alkalmazáson belül külön mini-játék irányként megjelent a Tatami próba is, ahol FitDino a Kung-Fu Teknőssel mérheti össze magát. A jelenlegi megvalósítás az `index.html` oldalon belüli `#tatamiMini` szekcióként működik, nem külön HTML oldalra mutató hivatkozásként.
+Az alkalmazáson belül külön mini-játék a Tatami harc, ahol FitDino a Kung-Fu Teknőssel mérheti össze magát. A Tatami harc külön `tatami.html` oldal, oldalnézetes canvas-játékkal és működő billentyűzetes, illetve mobilos vezérléssel.
 
 ## Éles webhely
 
@@ -13,15 +13,17 @@ Az alkalmazáson belül külön mini-játék irányként megjelent a Tatami pró
 - Adatbázis: nincs
 - Backend: nincs
 - Fő belépési pont: `index.html`
+- Tatami mini-játék belépési pontja: `tatami.html`
 
 ## Technológiai keretek
 
 - Statikus webapp: HTML, CSS, natív JavaScript
 - Külső build folyamat nincs
 - Composer, npm, Node build és adatbázis-migráció nem szükséges
-- A játék logikája jelenleg az `assets/js/game.js` és az `assets/js/fitdino/` fájlokban található
+- A fő játék logikája az `assets/js/game.js` és az `assets/js/fitdino/` fájlokban található
+- A Tatami harc logikája az `assets/js/tatami.js` fájlban található
 - Az adatvédelmi tájékoztató logikája az `assets/js/privacy-notice.js` fájlban található
-- A stílusok az `assets/css/style.css` fájlban találhatók
+- Az alap stílusok az `assets/css/style.css`, a Tatami harc kiegészítő stílusai az `assets/css/tatami.css` fájlban találhatók
 - Képi elemek: `assets/images/`
 
 ## Mappastruktúra
@@ -32,14 +34,17 @@ Az alkalmazáson belül külön mini-játék irányként megjelent a Tatami pró
 ├── AGENTS.md
 ├── README.md
 ├── index.html
+├── tatami.html
 └── assets/
     ├── css/
-    │   └── style.css
+    │   ├── style.css
+    │   └── tatami.css
     ├── images/
     │   └── logo.png
     └── js/
         ├── game.js
         ├── privacy-notice.js
+        ├── tatami.js
         └── fitdino/
             ├── constants.js
             ├── renderer.js
@@ -60,8 +65,10 @@ Az alkalmazáson belül külön mini-játék irányként megjelent a Tatami pró
 10. Patch ZIP esetén legyen `patch_liras.md` fájl is, amely röviden összefoglalja a módosításokat.
 11. Az adatvédelmi irányelvek footer linkje maradjon a ZenitPrograms publikus adatvédelmi oldalára mutató egyszerű hivatkozás.
 12. A felső adatvédelmi tájékoztató sáv a `.topbar` fölött jelenjen meg.
-13. Tatami próba linkje statikus deploy esetén működő, létező célra mutasson. Ha nincs külön `tatami.html`, akkor az `index.html` oldalon belüli `#tatamiMini` szekciót kell használni.
-14. A játékmódválasztó gombok legyenek jól láthatók, kontrasztosak és mobilon is könnyen megnyomhatók.
+13. A Tatami harc külön oldalra mutasson: `tatami.html`.
+14. A Tatami harcban a karakterek ne egyszerű korongként jelenjenek meg, hanem oldalnézetes, rajzolt FitDino és teknős figuraként.
+15. A Tatami harc legyen ténylegesen irányítható: mozgás, blokk, mozdulat, szünet és új mérkőzés.
+16. A játékmódválasztó gombok legyenek jól láthatók, kontrasztosak és mobilon is könnyen megnyomhatók.
 
 ## cPanel deploy szabály
 
@@ -80,12 +87,14 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 ## Ellenőrzési lista módosítás után
 
 - `index.html` betöltődik közvetlenül böngészőből.
+- `tatami.html` betöltődik közvetlenül böngészőből.
 - A logó és CSS fájlok relatív útvonalai működnek.
-- A játék elindul billentyűzettel és mobil érintéssel is.
+- A fő játék elindul billentyűzettel és mobil érintéssel is.
 - Ütközéskor életlevonás történik.
 - Három ütközés után Game Over állapot jelenik meg.
 - A rekord mentése localStorage-ban működik.
 - Az adatvédelmi tájékoztató sáv megjelenik a topbar fölött.
 - A footerben megjelenik az Adatvédelmi irányelvek link.
-- A Tatami próba linkje létező célra mutat és látható gombként jelenik meg.
+- A Tatami harc linkje a külön `tatami.html` oldalra mutat.
+- A Tatami harcban működik a mozgás, blokk, mozdulat, szünet és új mérkőzés.
 - cPanel deploy után a fájlok a `/public_html/fitdino` mappában jelennek meg.

@@ -8,8 +8,10 @@ Az alkalmazáson belül külön mini-játék a Tatami harc, ahol FitDino a Kung-
 
 ## Éles webhely
 
-- Szerver oldali célmappa: `/home/zenitpr1/public_html/fitdino/`
-- Publikus útvonal: `public_html/fitdino`
+- Szerver oldali célmappa: `/home/zenitpr1/public_html/webapps/fitdino/`
+- Publikus célútvonal: `public_html/webapps/fitdino`
+- Publikus aldomain: `https://fitdino.zenitprograms.hu`
+- Az aldomain dokumentumgyökér-hozzárendelése külön WePanel-beállítás; repository deploy nem módosíthatja automatikusan.
 - Adatbázis: nincs
 - Backend: nincs
 - Fő belépési pont: `index.html`
@@ -54,25 +56,29 @@ Az alkalmazáson belül külön mini-játék a Tatami harc, ahol FitDino a Kung-
 ## Fejlesztési szabályok
 
 1. Az alkalmazás maradjon adatbázis nélküli, statikus webapp.
-2. A publikus célmappa mindig `/public_html/fitdino`.
-3. A felhasználói szövegek magyar nyelvűek legyenek.
-4. A játék maradjon egyszerűen használható: fel nyíl / Space / mobil érintés.
-5. A dínónak 3 élete van; ütközés után ne azonnal legyen vége a játéknak, hanem csak a harmadik ütközés után.
-6. Az akadályok random generálódjanak, de a játék ne legyen igazságtalanul lehetetlen.
-7. Új funkcióknál mobilos működést is ellenőrizni kell.
-8. Ne kerüljön be felesleges framework vagy nagy külső függőség.
-9. Patch készítéskor csak az új és módosított fájlok kerüljenek a ZIP-be, projektgyökérhez igazodó relatív útvonalakkal.
-10. Patch ZIP esetén legyen `patch_liras.md` fájl is, amely röviden összefoglalja a módosításokat.
-11. Az adatvédelmi irányelvek footer linkje maradjon a ZenitPrograms publikus adatvédelmi oldalára mutató egyszerű hivatkozás.
-12. A felső adatvédelmi tájékoztató sáv a `.topbar` fölött jelenjen meg.
-13. A Tatami harc külön oldalra mutasson: `tatami.html`.
-14. A Tatami harcban a karakterek ne egyszerű korongként jelenjenek meg, hanem oldalnézetes, rajzolt FitDino és teknős figuraként.
-15. A Tatami harc legyen ténylegesen irányítható: mozgás, blokk, mozdulat, szünet és új mérkőzés.
-16. A játékmódválasztó gombok legyenek jól láthatók, kontrasztosak és mobilon is könnyen megnyomhatók.
+2. A deploy célmappa mindig `/home/zenitpr1/public_html/webapps/fitdino/`.
+3. Az aldomain dokumentumgyökerét a felhasználó állítja át a WePanelen; ezt a repository vagy deploy-script nem módosíthatja.
+4. A régi `/home/zenitpr1/public_html/fitdino/` mappa csak sikeres aldomain-cutover és production smoke után vezethető ki.
+5. A felhasználói szövegek magyar nyelvűek legyenek.
+6. A játék maradjon egyszerűen használható: fel nyíl / Space / mobil érintés.
+7. A dínónak 3 élete van; ütközés után ne azonnal legyen vége a játéknak, hanem csak a harmadik ütközés után.
+8. Az akadályok random generálódjanak, de a játék ne legyen igazságtalanul lehetetlen.
+9. Új funkcióknál mobilos működést is ellenőrizni kell.
+10. Ne kerüljön be felesleges framework vagy nagy külső függőség.
+11. Patch készítéskor csak az új és módosított fájlok kerüljenek a ZIP-be, projektgyökérhez igazodó relatív útvonalakkal.
+12. Patch ZIP esetén legyen `patch_liras.md` fájl is, amely röviden összefoglalja a módosításokat.
+13. Az adatvédelmi irányelvek footer linkje maradjon a ZenitPrograms publikus adatvédelmi oldalára mutató egyszerű hivatkozás.
+14. A felső adatvédelmi tájékoztató sáv a `.topbar` fölött jelenjen meg.
+15. A Tatami harc külön oldalra mutasson: `tatami.html`.
+16. A Tatami harcban a karakterek ne egyszerű korongként jelenjenek meg, hanem oldalnézetes, rajzolt FitDino és teknős figuraként.
+17. A Tatami harc legyen ténylegesen irányítható: mozgás, blokk, mozdulat, szünet és új mérkőzés.
+18. A játékmódválasztó gombok legyenek jól láthatók, kontrasztosak és mobilon is könnyen megnyomhatók.
 
-## cPanel deploy szabály
+## WePanel deploy szabály
 
-A cPanel Git deploy a `.cpanel.yml` fájlt használja. A deploy folyamat `rsync --delete` paranccsal szinkronizál a célmappába, ezért ha a repóból fájl vagy mappa törlődik, az az éles `public_html/fitdino` mappából is törlődik.
+A WePanelen használt repository a kompatibilitási célból megtartott gyökérszintű `.cpanel.yml` fájlt használja. A fájlt nem szabad `.wepanel.yml` vagy `.wepanel.yaml` névre átnevezni. A branchkezelés külön Git/WePanel funkció, nem a deployfájl neve vezérli.
+
+A deploy folyamat `rsync --delete` paranccsal szinkronizál kizárólag a `/home/zenitpr1/public_html/webapps/fitdino/` célmappába. A régi `/home/zenitpr1/public_html/fitdino/` mappát a deploy nem módosíthatja és nem törölheti.
 
 A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webmappába:
 
@@ -97,4 +103,6 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 - A footerben megjelenik az Adatvédelmi irányelvek link.
 - A Tatami harc linkje a külön `tatami.html` oldalra mutat.
 - A Tatami harcban működik a mozgás, blokk, mozdulat, szünet és új mérkőzés.
-- cPanel deploy után a fájlok a `/public_html/fitdino` mappában jelennek meg.
+- Deploy után a fájlok a `/home/zenitpr1/public_html/webapps/fitdino/` mappában jelennek meg.
+- Az aldomain átállítása előtt a régi `/home/zenitpr1/public_html/fitdino/` mappa érintetlen marad.
+- Az aldomain átállítása után `https://fitdino.zenitprograms.hu` production smoke szükséges a régi mappa kivezetése előtt.

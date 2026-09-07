@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/zenitpr1/public_html/fitdino/
+    - export DEPLOYPATH=/home/zenitpr1/public_html/webapps/fitdino/
     - /bin/mkdir -p "$DEPLOYPATH"
     - >
       /bin/rsync -av --delete --delete-after

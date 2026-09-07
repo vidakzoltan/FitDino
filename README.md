@@ -17,17 +17,19 @@ A **FitDino** egy egyszerű, magyar nyelvű, dínós ugrálós webjáték. A já
 
 ## Telepítési hely
 
-A webapp éles helye:
+A Zenit webalkalmazások közös új gyökere alatt a FitDino éles célmappája:
 
 ```text
-/public_html/fitdino
+/public_html/webapps/fitdino
 ```
 
-cPanel szerverútvonallal:
+Teljes szerverútvonallal:
 
 ```text
-/home/zenitpr1/public_html/fitdino/
+/home/zenitpr1/public_html/webapps/fitdino/
 ```
+
+Az aldomain dokumentumgyökér-hozzárendelése külön WePanel-beállítás. A repository deployja ezt nem módosítja automatikusan.
 
 ## Projektstruktúra
 
@@ -103,15 +105,17 @@ A Tatami harc oldal:
 http://localhost:8080/tatami.html
 ```
 
-## cPanel deploy
+## WePanel deploy
 
-A repó gyökerében található `.cpanel.yml` fájl végzi a deploy-t:
+A WePanelen használt repository gyökerében továbbra is a kompatibilitási célból megtartott `.cpanel.yml` fájl írja le a deploy feladatait. A fájlnév nem kerül `.wepanel.yml` névre; a branchkezelés ettől független Git/WePanel funkció.
+
+A jelenlegi deploycél:
 
 ```yaml
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/zenitpr1/public_html/fitdino/
+    - export DEPLOYPATH=/home/zenitpr1/public_html/webapps/fitdino/
     - /bin/mkdir -p "$DEPLOYPATH"
     - >
       /bin/rsync -av --delete --delete-after
@@ -134,7 +138,7 @@ deployment:
       "$DEPLOYPATH/"
 ```
 
-A deploy `rsync --delete` használatával működik, ezért a repóból törölt fájlok az éles célmappából is törlődnek.
+A deploy `rsync --delete` használatával működik, ezért a repóból törölt fájlok az aktuális deploycélból is törlődnek. A régi `/home/zenitpr1/public_html/fitdino/` könyvtárat ez a konfiguráció nem törli és nem szinkronizálja; annak kivezetése csak a sikeres aldomain-cutover és production smoke után történhet.
 
 ## Fontos fejlesztési elvek
 

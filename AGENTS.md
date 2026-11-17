@@ -115,3 +115,4 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 - Tatami játékóra kizárólag aktív mérkőzés alatt teljen; a kiadás előtti teszt fedje a szünet közbeni támadást és az elengedett mobil vezérlőket.
 - Fókuszban lévő gomb/URL billentyűzetes működését a globális játékgyorsbillentyűk nem írhatják felül.
 - A publikus oldal ne mutasson elavult szerverútvonalat; a deploymentből a `tests/` és `.env*` ki van zárva.
+- A játékoverlayek segítségnézete kis magasságú mobilkijelzőn is görgethető maradjon (a `.card` maximális magassággal és belső görgetéssel).

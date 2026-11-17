@@ -39,6 +39,12 @@ test('Tatami szünet alatt nem halad a játékóra', () => {
   assert.match(js, /document\.addEventListener\('visibilitychange'/);
 });
 
+test('A kis képernyős súgó nem lóg le a játékmezőről', () => {
+  const css = file('assets/css/style.css');
+  assert.match(css, /\.card\{[^}]*max-height:100%/);
+  assert.match(css, /\.card\{[^}]*overflow-y:auto/);
+});
+
 test('Deploy nem publikál teszteket és környezeti titkokat', () => {
   const deploy = file('.cpanel.yml');
   assert.match(deploy, /--exclude='tests\/'/);

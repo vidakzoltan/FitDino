@@ -150,3 +150,13 @@ A deploy `rsync --delete` használatával működik, ezért a repóból törölt
 - Az adatvédelmi/footer link és a felső tájékoztató sáv maradjon üzleti logikától mentes.
 - A tájékoztató sáv csak működéshez szükséges sütikről és helyi böngészőtárolásról szólhat.
 - Patch ZIP készítéskor csak az új és módosított fájlok kerüljenek a csomagba.
+
+## Auditjavítások – 2026-11-17
+
+- A rekordolvasás/mentés akkor sem állítja le a játékot, ha a böngésző tiltja a `localStorage`-ot; ilyen esetben a rekord csak az aktuális lapon marad meg.
+- A fő játék ugrásfizikája és az akadálymozgás eltelt időre számol, az akadályközök a teljes ugrás idejéhez alkalmazkodnak.
+- Szünet alatt nem lehet ugrással véletlenül folytatni; ablakváltáskor a játékok szünetre állnak. A Tatami belső órája szünetben megáll.
+- A vezérlők nem írják felül a fókuszban lévő gombok és linkek billentyűzetezését; az ismétlődő billentyűesemények nem indítanak új akciót.
+- A nyilvános felületről eltűnt az elavult telepítési útvonal. A telepítés nem teszi közzé a `tests/` vagy `.env*` fájlokat.
+
+**Ellenőrzés:** a két HTML oldal, CSS és JavaScript kód statikus vizsgálata; a valódi production smoke és a WePanel aldomain document root ellenőrzése külön szükséges, GitHub-PR önmagában nem telepít.

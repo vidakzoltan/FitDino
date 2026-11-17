@@ -49,5 +49,7 @@ test('Deploy nem publikál teszteket és környezeti titkokat', () => {
   const deploy = file('.cpanel.yml');
   assert.match(deploy, /--exclude='tests\/'/);
   assert.match(deploy, /--exclude='\.env\*'/);
+  assert.match(deploy, /--exclude='\.well-known\/'/);
+  assert.match(deploy, /--exclude='\.htaccess'/);
   assert.match(deploy, /\/home\/zenitpr1\/public_html\/webapps\/fitdino\//);
 });

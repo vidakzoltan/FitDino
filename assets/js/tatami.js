@@ -142,6 +142,7 @@
     state.running = true;
     state.paused = false;
     setOverlayVisible(false);
+    if (document.activeElement === btnStart) canvas.focus({ preventScroll: true });
   }
 
   function endGame(winner) {

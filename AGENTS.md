@@ -116,3 +116,5 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 - Fókuszban lévő gomb/URL billentyűzetes működését a globális játékgyorsbillentyűk nem írhatják felül.
 - A publikus oldal ne mutasson elavult szerverútvonalat; a deploymentből a `tests/` és `.env*` ki van zárva.
 - A játékoverlayek segítségnézete kis magasságú mobilkijelzőn is görgethető maradjon (a `.card` maximális magassággal és belső görgetéssel).
+- A Tatami startgombja a rejtett overlay helyett a canvasra irányítsa a fókuszt, hogy a Space ténylegesen támadjon.
+- Az rsync törléssel szemben védett a szerver által fenntartott `.well-known/` és `.htaccess` is (ezeket a repo jelenleg nem kezeli).

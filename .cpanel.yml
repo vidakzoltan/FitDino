@@ -15,6 +15,8 @@ deployment:
       --exclude='*.sql'
       --exclude='tests/'
       --exclude='.env*'
+      --exclude='.well-known/'
+      --exclude='.htaccess'
       --exclude='uploads/'
       --exclude='_backup/'
       --exclude='backup/'

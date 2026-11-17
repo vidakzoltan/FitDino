@@ -24,6 +24,7 @@
   let H = 470;
   let groundY = 350;
   let lastT = 0;
+  let gameClock = 0; // Csak játék közben telik, szünet alatt nem.
 
   const dino = {
     x: 190,
@@ -122,7 +123,10 @@
     state.score = 0;
     state.message = 'FitDino és Kung-Fu Teknős a tatamin.';
     state.messageUntil = 0;
+    gameClock = 0;
     lastT = 0;
+    keys.clear();
+    mobileHold.left = mobileHold.right = mobileHold.block = false;
     updateHud();
     if (overlayTitle) overlayTitle.textContent = 'Tatami harc';
     if (overlayText) {
@@ -558,8 +562,9 @@
   function loop(now) {
     const dt = lastT ? Math.min(0.033, (now - lastT) / 1000) : 0;
     lastT = now;
-    update(now, dt);
-    draw(now);
+    if (state.running && !state.paused && !state.gameOver) gameClock += dt * 1000;
+    update(gameClock, dt);
+    draw(gameClock);
     requestAnimationFrame(loop);
   }
 
@@ -567,22 +572,40 @@
     if (control === 'left') mobileHold.left = pressed;
     if (control === 'right') mobileHold.right = pressed;
     if (control === 'block') mobileHold.block = pressed;
-    if (control === 'strike' && pressed) strike(performance.now());
+    if (control === 'strike' && pressed) strike(gameClock);
   }
 
+  function pauseOnLeave() {
+    keys.clear();
+    mobileHold.left = mobileHold.right = mobileHold.block = false;
+    if (state.running && !state.gameOver) state.paused = true;
+  }
+
+  window.addEventListener('blur', pauseOnLeave);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) pauseOnLeave();
+  });
+
   document.addEventListener('keydown', (event) => {
+    if (event.target instanceof Element && event.target.closest('button, a, input, select, textarea, [contenteditable]')) return;
     if (['ArrowLeft', 'ArrowRight', 'ArrowUp', ' ', 'Spacebar'].includes(event.key)) event.preventDefault();
     if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'k' || event.key === 'K') {
-      strike(performance.now());
+      if (!event.repeat) strike(gameClock);
       return;
     }
-    if (event.key === 'r' || event.key === 'R') {
+    if (!event.repeat && (event.key === 'r' || event.key === 'R')) {
       resetGame();
       startGame();
       return;
     }
-    if (event.key === 'p' || event.key === 'P') {
-      if (state.running && !state.gameOver) state.paused = !state.paused;
+    if (!event.repeat && (event.key === 'p' || event.key === 'P')) {
+      if (state.running && !state.gameOver) {
+        state.paused = !state.paused;
+        if (state.paused) {
+          keys.clear();
+          mobileHold.left = mobileHold.right = mobileHold.block = false;
+        }
+      }
       return;
     }
     keys.add(event.key);
@@ -602,6 +625,10 @@
     button.addEventListener('pointerup', () => pressControl(control, false));
     button.addEventListener('pointercancel', () => pressControl(control, false));
     button.addEventListener('pointerleave', () => pressControl(control, false));
+    // A képernyőolvasó / billentyűzet által kiváltott aktiválás is üssön.
+    if (control === 'strike') button.addEventListener('click', (event) => {
+      if (event.detail === 0) pressControl('strike', true);
+    });
   });
 
   btnStart?.addEventListener('click', startGame);

@@ -93,7 +93,7 @@ YAML:
 
     const text = d.createElement('div');
     text.className = 'privacy-storage-notice__text';
-    text.appendChild(d.createTextNode('A FitDino a működéséhez szükséges technikai sütit és helyi böngészőtárolást használ. Ezek a játékállapot, a rekord és a tájékoztató tudomásulvételének megőrzéséhez szükségesek. '));
+    text.appendChild(d.createTextNode('A FitDino a működéséhez szükséges technikai sütit és helyi böngészőtárolást használ. A helyi tárolóban a rekord, a technikai sütiben a tájékoztató tudomásulvétele őrződik meg. '));
 
     const link = d.createElement('a');
     link.href = POLICY_URL;

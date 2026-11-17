@@ -1,5 +1,5 @@
 import { FITDINO_VERSION, LS_BEST, LEVELS, MAX_LIVES } from './fitdino/constants.js';
-import { clamp, getLevelIndexByScore, livesToHearts, makeToast, rand, rectsOverlap } from './fitdino/utils.js';
+import { clamp, getLevelIndexByScore, livesToHearts, rand, rectsOverlap } from './fitdino/utils.js';
 import { drawScene } from './fitdino/renderer.js';
 
 console.info('[FitDino] game.js betöltve, verzió:', FITDINO_VERSION);
@@ -93,12 +93,21 @@ function showOverlay() {
 }
 
 function loadBest() {
-  const value = Number(localStorage.getItem(LS_BEST) || '0');
-  return Number.isFinite(value) ? value : 0;
+  try {
+    const value = Number(window.localStorage.getItem(LS_BEST) || '0');
+    return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 0;
+  } catch (error) {
+    // A tiltott vagy megtelt tárhely nem akadályozhatja meg a játék indulását.
+    return 0;
+  }
 }
 
 function saveBest(value) {
-  localStorage.setItem(LS_BEST, String(Math.floor(value)));
+  try {
+    window.localStorage.setItem(LS_BEST, String(Math.floor(value)));
+  } catch (error) {
+    // A rekord az aktuális játékmenetben ettől még látható marad.
+  }
 }
 
 function isMobileLikeLayout() {
@@ -157,7 +166,7 @@ function recalcMetrics() {
   dino.x = cfg.dinoX;
   dino.w = cfg.dinoW;
   dino.h = cfg.dinoH;
-  dino.y = clamp(dino.y, 0, cfg.groundY - dino.h);
+  dino.y = dino.onGround ? cfg.groundY - dino.h : clamp(dino.y, 0, cfg.groundY - dino.h);
 }
 
 function getCurrentLevel() {
@@ -206,11 +215,17 @@ function currentSpeed() {
 }
 
 function currentMinGap() {
-  return cfg.baseMinGap * getCurrentLevel().gapMul;
+  // A következő akadály előtt maradjon idő landolni és újra ugrani.
+  // Minden érték a 60 Hz-es játékfizika egy képkockájára vonatkozik.
+  const jumpFrames = (2 * Math.abs(cfg.jumpVy)) / cfg.gravity;
+  const landingGap = currentSpeed() * (jumpFrames + 8)
+    + cfg.obsWMax * getCurrentLevel().sizeMul
+    + cfg.dinoW * 0.2;
+  return Math.max(cfg.baseMinGap * getCurrentLevel().gapMul, landingGap);
 }
 
 function currentMaxGap() {
-  return cfg.baseMaxGap * getCurrentLevel().gapMul;
+  return Math.max(currentMinGap() + cfg.obsWMax * 2, cfg.baseMaxGap * getCurrentLevel().gapMul);
 }
 
 function resetRoundAfterHit() {
@@ -252,13 +267,12 @@ function resetGame() {
   showOverlay();
 }
 
-function startGame(now) {
+function startGame() {
   if (state.gameOver) return;
-  if (!state.running) {
-    state.running = true;
-  }
+  state.running = true;
   state.paused = false;
   hideOverlay();
+  if (document.activeElement === btnStart) canvas.focus({ preventScroll: true });
 }
 
 function endGame() {
@@ -279,9 +293,8 @@ function endGame() {
 }
 
 function jump(now) {
-  if (state.gameOver) return;
-  startGame(now);
-  if (state.paused) return;
+  if (state.gameOver || state.paused) return;
+  startGame();
   if (dino.onGround) {
     dino.vy = cfg.jumpVy;
     dino.onGround = false;
@@ -426,9 +439,11 @@ function update(now, dt) {
   if (!state.running || state.paused) return;
   if (now < state.freezeUntil) return;
 
+  // Az ugrás, esés és az akadálymozgás azonos eltelt idővel számoljon.
+  const frameStep = Math.max(0, dt / 16.6667);
   dino.prevY = dino.y;
-  dino.vy += cfg.gravity;
-  dino.y += dino.vy;
+  dino.vy += cfg.gravity * frameStep;
+  dino.y += dino.vy * frameStep;
 
   if (dino.y >= cfg.groundY - dino.h) {
     dino.y = cfg.groundY - dino.h;
@@ -467,22 +482,18 @@ function update(now, dt) {
 }
 
 function onKeyDown(event) {
+  // A gombok és hivatkozások saját billentyűzetes működését nem írjuk felül.
+  if (event.target instanceof Element && event.target.closest('button, a, input, select, textarea, [contenteditable]')) return;
   const key = event.key;
-  const now = performance.now();
-
   if (key === 'ArrowUp' || key === ' ' || key === 'Spacebar') {
     event.preventDefault();
-    jump(now);
-  }
-
-  if (key === 'p' || key === 'P') {
+    if (!event.repeat) jump(performance.now());
+  } else if (!event.repeat && (key === 'p' || key === 'P')) {
     if (state.running && !state.gameOver) state.paused = !state.paused;
-  }
-
-  if (key === 'r' || key === 'R') {
+  } else if (!event.repeat && (key === 'r' || key === 'R')) {
     if (state.gameOver) {
       resetGame();
-      startGame(now);
+      startGame();
     }
   }
 }
@@ -510,7 +521,6 @@ function handleStartButton(event) {
 }
 
 btnStart?.addEventListener('click', handleStartButton);
-btnStart?.addEventListener('pointerup', handleStartButton);
 
 btnHow?.addEventListener('click', () => {
   help?.classList.toggle('show');
@@ -527,6 +537,15 @@ btnFullscreen?.addEventListener('click', async () => {
   } catch (error) {
     console.warn('Fullscreen nem elérhető:', error);
   }
+});
+
+function pauseOnLeave() {
+  if (state.running && !state.gameOver) state.paused = true;
+}
+
+window.addEventListener('blur', pauseOnLeave);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) pauseOnLeave();
 });
 
 function loop(t) {

@@ -106,3 +106,12 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 - Deploy után a fájlok a `/home/zenitpr1/public_html/webapps/fitdino/` mappában jelennek meg.
 - Az aldomain átállítása előtt a régi `/home/zenitpr1/public_html/fitdino/` mappa érintetlen marad.
 - Az aldomain átállítása után `https://fitdino.zenitprograms.hu` production smoke szükséges a régi mappa kivezetése előtt.
+
+## 2026-11-17 audit utáni invariánsok
+
+- A fő játék fizikája eltelt időtől függjön, ne a monitor frissítési frekvenciájától; akadályköznél legalább egy ugrás + landolás ideje legyen biztosított.
+- `localStorage` hozzáférés hibája nem akaszthatja meg a játék betöltését.
+- A `P` billentyűvel kapcsolt szünetet az ugrás nem kapcsolhatja ki; háttérbe váltáskor mindkét játék szüneteljen.
+- Tatami játékóra kizárólag aktív mérkőzés alatt teljen; a kiadás előtti teszt fedje a szünet közbeni támadást és az elengedett mobil vezérlőket.
+- Fókuszban lévő gomb/URL billentyűzetes működését a globális játékgyorsbillentyűk nem írhatják felül.
+- A publikus oldal ne mutasson elavult szerverútvonalat; a deploymentből a `tests/` és `.env*` ki van zárva.

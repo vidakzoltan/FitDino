@@ -13,6 +13,8 @@ deployment:
       --exclude='*.csv'
       --exclude='*.md'
       --exclude='*.sql'
+      --exclude='tests/'
+      --exclude='.env*'
       --exclude='uploads/'
       --exclude='_backup/'
       --exclude='backup/'

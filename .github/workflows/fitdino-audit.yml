@@ -25,4 +25,6 @@ jobs:
           node --check assets/js/fitdino/utils.js
           node --check assets/js/fitdino/renderer.js
       - name: Run regression checks
-        run: node --test tests/audit.test.cjs
+        run: |
+          sh -n scripts/configure-directory-index.sh
+          node --test tests/*.test.cjs

@@ -1,0 +1,35 @@
+/* Fullscreen keeps the HUD, exit button and Tatami touch controls together. */
+.screen-btn{width:auto;min-width:44px;min-height:44px;padding:8px 12px;font:inherit;font-size:13px;white-space:nowrap;}
+.pause-btn{display:inline-flex;align-items:center;justify-content:center;}
+.pause-btn:disabled{opacity:.5;cursor:default;}
+html.game-fullscreen-open,html.game-fullscreen-open body{overflow:hidden;overscroll-behavior:none;}
+.app.is-game-fullscreen{
+  position:fixed;inset:0;z-index:1000;
+  width:100%;height:100%;height:100dvh;max-width:none;margin:0;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);
+  display:flex;flex-direction:column;gap:4px;overflow:hidden;background:var(--bg);
+}
+.app.is-game-fullscreen .brand,
+.app.is-game-fullscreen .mode-switch,
+.app.is-game-fullscreen .tatami-intro,
+.app.is-game-fullscreen .footer,
+.app.is-game-fullscreen .privacy-storage-notice,
+.app.is-game-fullscreen [data-fullscreen-start]{display:none;}
+.app.is-game-fullscreen .topbar{flex:0 0 auto;padding:4px 6px;border:0;border-radius:0;box-shadow:none;}
+.app.is-game-fullscreen .hud{width:100%;display:flex;flex-direction:row;flex-wrap:nowrap;gap:4px;align-items:center;justify-content:space-between;}
+.app.is-game-fullscreen .hud-item{min-width:0;padding:4px 6px;flex:1 1 0;border-radius:8px;overflow:hidden;}
+.app.is-game-fullscreen .hud-label{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.app.is-game-fullscreen .hud-value{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.app.is-game-fullscreen .hud-item-level{flex-grow:1.8;}
+.app.is-game-fullscreen .screen-btn{flex:0 0 auto;padding:6px 10px;}
+.app.is-game-fullscreen .pause-btn{display:inline-flex;align-items:center;justify-content:center;}
+.app.is-game-fullscreen .stage{display:flex;flex-direction:column;flex:1 1 0;min-height:0;margin:0;gap:4px;}
+.app.is-game-fullscreen .canvas-wrap{flex:1 1 0;min-height:0;border:0;border-radius:0;box-shadow:none;}
+.app.is-game-fullscreen canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;}
+.app.is-game-fullscreen .overlay{padding:10px;}
+.app.is-game-fullscreen .tatami-mobile-controls{flex:0 0 auto;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0;padding:0 6px 4px;}
+.app.is-game-fullscreen .tatami-control{min-height:48px;padding:8px 4px;border-radius:10px;touch-action:none;}
+@media (max-width:420px){
+  .app.is-game-fullscreen #bestBox{display:none;}
+  .app.is-game-fullscreen .hud-item-level{flex-grow:1.5;}
+}

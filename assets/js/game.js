@@ -20,7 +20,7 @@ const overlayText = document.getElementById('overlayText');
 const btnStart = document.getElementById('btnStart');
 const btnHow = document.getElementById('btnHow');
 const help = document.getElementById('help');
-const btnFullscreen = document.getElementById('btnFullscreen');
+const btnPause = document.getElementById('btnPause');
 
 const cfg = {
   groundY: 0,
@@ -177,6 +177,20 @@ function updateScoreUI() {
   elScore.textContent = String(Math.floor(state.score));
 }
 
+function syncPauseControl() {
+  if (!btnPause) return;
+  btnPause.disabled = !state.running || state.gameOver;
+  btnPause.textContent = state.paused ? '▶ Folytatás' : 'Ⅱ Szünet';
+  btnPause.setAttribute('aria-label', state.paused ? 'Folytatás' : 'Szünet');
+  btnPause.setAttribute('aria-pressed', String(state.paused));
+}
+
+function togglePause() {
+  if (!state.running || state.gameOver) return;
+  state.paused = !state.paused;
+  syncPauseControl();
+}
+
 function updateBestUI() {
   elBest.textContent = String(Math.floor(state.bestScore));
 }
@@ -271,6 +285,7 @@ function startGame() {
   if (state.gameOver) return;
   state.running = true;
   state.paused = false;
+  syncPauseControl();
   hideOverlay();
   if (document.activeElement === btnStart) canvas.focus({ preventScroll: true });
 }
@@ -279,6 +294,7 @@ function endGame() {
   state.running = false;
   state.paused = false;
   state.gameOver = true;
+  syncPauseControl();
 
   if (state.score > state.bestScore) {
     state.bestScore = state.score;
@@ -489,7 +505,7 @@ function onKeyDown(event) {
     event.preventDefault();
     if (!event.repeat) jump(performance.now());
   } else if (!event.repeat && (key === 'p' || key === 'P')) {
-    if (state.running && !state.gameOver) state.paused = !state.paused;
+    togglePause();
   } else if (!event.repeat && (key === 'r' || key === 'R')) {
     if (state.gameOver) {
       resetGame();
@@ -521,26 +537,15 @@ function handleStartButton(event) {
 }
 
 btnStart?.addEventListener('click', handleStartButton);
+btnPause?.addEventListener('click', togglePause);
 
 btnHow?.addEventListener('click', () => {
   help?.classList.toggle('show');
 });
 
-btnFullscreen?.addEventListener('click', async () => {
-  try {
-    const element = canvasWrap || document.documentElement;
-    if (!document.fullscreenElement) {
-      await element.requestFullscreen?.();
-    } else {
-      await document.exitFullscreen?.();
-    }
-  } catch (error) {
-    console.warn('Fullscreen nem elérhető:', error);
-  }
-});
-
 function pauseOnLeave() {
   if (state.running && !state.gameOver) state.paused = true;
+  syncPauseControl();
 }
 
 window.addEventListener('blur', pauseOnLeave);
@@ -579,6 +584,8 @@ function loop(t) {
 
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas, { passive: true });
+window.addEventListener('fitdino:resize', resizeCanvas);
+if (window.ResizeObserver) new ResizeObserver(resizeCanvas).observe(canvasWrap);
 
 state.bestScore = loadBest();
 updateBestUI();

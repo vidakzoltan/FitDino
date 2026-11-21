@@ -2,16 +2,17 @@
 <html lang="hu">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>FitDino</title>
   <meta name="description" content="Egyszerű dínós ugrálós játék — akadályokkal, szintekkel, 3 élettel és külön tatami mini-játékkal." />
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
   <link rel="apple-touch-icon" href="assets/images/logo.png" />
   <link rel="stylesheet" href="assets/css/style.css?v=20261117_1" />
   <link rel="stylesheet" href="assets/css/tatami.css?v=20261117_1" />
+  <link rel="stylesheet" href="assets/css/fullscreen.css?v=20261121_1" />
 </head>
 <body>
-  <div class="app">
+  <div class="app" data-game-root data-start-button="btnStart">
     <header class="topbar">
       <div class="brand">
         <img class="logo" src="assets/images/logo.png" alt="FitDino logó" />
@@ -39,8 +40,9 @@
           <span class="hud-value" id="lives">❤️❤️❤️</span>
         </div>
 
-        <button class="icon-btn" id="btnFullscreen" type="button" title="Teljes képernyő" aria-label="Teljes képernyő">
-          ⛶
+        <button class="icon-btn screen-btn pause-btn" id="btnPause" type="button" aria-label="Szünet" aria-pressed="false" disabled>Ⅱ Szünet</button>
+        <button class="icon-btn screen-btn" id="btnFullscreen" data-fullscreen-toggle type="button" title="Teljes képernyő" aria-label="Teljes képernyő" aria-pressed="false">
+          ⛶ Teljes képernyő
         </button>
       </div>
     </header>
@@ -63,6 +65,7 @@
             </p>
             <div class="row">
               <button class="btn primary" id="btnStart" type="button">Kezdés</button>
+              <button class="btn primary" data-fullscreen-start type="button">Teljes képernyős játék</button>
               <button class="btn" id="btnHow" type="button">Irányítás</button>
               <a class="btn primary" href="tatami.html">Tatami harc</a>
             </div>
@@ -102,6 +105,7 @@
   </div>
 
   <script src="assets/js/privacy-notice.js?v=20261117_1"></script>
-  <script type="module" src="assets/js/game.js?v=20261117_1"></script>
+  <script src="assets/js/fullscreen.js?v=20261121_1" defer></script>
+  <script type="module" src="assets/js/game.js?v=20261121_1"></script>
 </body>
 </html>

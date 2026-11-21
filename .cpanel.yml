@@ -14,6 +14,7 @@ deployment:
       --exclude='*.md'
       --exclude='*.sql'
       --exclude='tests/'
+      --exclude='scripts/'
       --exclude='.env*'
       --exclude='.well-known/'
       --exclude='.htaccess'
@@ -26,5 +27,6 @@ deployment:
       --exclude='logs/'
       ./
       "$DEPLOYPATH/"
+    - /bin/sh ./scripts/configure-directory-index.sh "$DEPLOYPATH"
     - /usr/bin/find "$DEPLOYPATH" -type d -exec /bin/chmod 755 {} +
     - /usr/bin/find "$DEPLOYPATH" -type f -exec /bin/chmod 644 {} +

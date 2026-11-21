@@ -117,4 +117,6 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 - A publikus oldal ne mutasson elavult szerverútvonalat; a deploymentből a `tests/` és `.env*` ki van zárva.
 - A játékoverlayek segítségnézete kis magasságú mobilkijelzőn is görgethető maradjon (a `.card` maximális magassággal és belső görgetéssel).
 - A Tatami startgombja a rejtett overlay helyett a canvasra irányítsa a fókuszt, hogy a Space ténylegesen támadjon.
-- Az rsync törléssel szemben védett a szerver által fenntartott `.well-known/` és `.htaccess` is (ezeket a repo jelenleg nem kezeli).
+- Az rsync törléssel szemben védett a szerver által fenntartott `.well-known/` és `.htaccess` is. A deploy az rsync után a `scripts/configure-directory-index.sh` segítségével, a meglévő sorok megtartásával állítja be a FitDino saját `DirectoryIndex disabled` / `DirectoryIndex index.html` záróblokkját. Ez szükséges a szülő honlap PHP-kezdőlap-beállításának felülírásához.
+- A `scripts/` könyvtár nem kerülhet a publikus deploycélba. A kezdőlap-javítás nem ad PHP backendet a játékhoz.
+- Production smoke során a sima `/` címet is ellenőrizni kell; a közvetlen `/index.html` sikeres elérése önmagában kevés.

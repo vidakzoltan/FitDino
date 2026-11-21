@@ -107,6 +107,18 @@ http://localhost:8080/tatami.html
 
 ## WePanel deploy
 
+A FitDino kezdőlapja `index.html`. A szülő honlap `.htaccess` fájlja
+`DirectoryIndex index.php` értéket állíthat be, ezért az aldomain `/` címe akkor is
+hibát adhat, ha a közvetlen `/index.html` már elérhető. A deploy az rsync után a
+`scripts/configure-directory-index.sh` segítségével a célmappa `.htaccess`
+fájljának végére saját `DirectoryIndex disabled` és `DirectoryIndex index.html`
+beállítást tesz. A korábbi szerverbeállításokat megtartja, az ismételt futtatás
+nem duplikálja a változatlan záróblokkot. A `scripts/` mappa nem publikus tartalom.
+
+Telepítés után a `/`, az `/index.html`, a `/tatami.html` és a HTML-ben hivatkozott
+CSS/JS fájlok ellenőrzése szükséges. A közvetlen `/index.html` 200-as válasza
+önmagában még nem igazolja az aldomain kezdőlapjának működését.
+
 A WePanelen használt repository gyökerében továbbra is a kompatibilitási célból megtartott `.cpanel.yml` fájl írja le a deploy feladatait. A fájlnév nem kerül `.wepanel.yml` névre; a branchkezelés ettől független Git/WePanel funkció.
 
 A jelenlegi deploycél:
@@ -127,6 +139,11 @@ deployment:
       --exclude='*.csv'
       --exclude='*.md'
       --exclude='*.sql'
+      --exclude='tests/'
+      --exclude='scripts/'
+      --exclude='.env*'
+      --exclude='.well-known/'
+      --exclude='.htaccess'
       --exclude='uploads/'
       --exclude='_backup/'
       --exclude='backup/'
@@ -136,6 +153,9 @@ deployment:
       --exclude='logs/'
       ./
       "$DEPLOYPATH/"
+    - /bin/sh ./scripts/configure-directory-index.sh "$DEPLOYPATH"
+    - /usr/bin/find "$DEPLOYPATH" -type d -exec /bin/chmod 755 {} +
+    - /usr/bin/find "$DEPLOYPATH" -type f -exec /bin/chmod 644 {} +
 ```
 
 A deploy `rsync --delete` használatával működik, ezért a repóból törölt fájlok az aktuális deploycélból is törlődnek. A régi `/home/zenitpr1/public_html/fitdino/` könyvtárat ez a konfiguráció nem törli és nem szinkronizálja; annak kivezetése csak a sikeres aldomain-cutover és production smoke után történhet.

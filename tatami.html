@@ -2,16 +2,17 @@
 <html lang="hu">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>FitDino – Tatami harc</title>
   <meta name="description" content="FitDino külön tatami mini-játéka Kung-Fu Teknős ellen oldalnézetes karakterekkel és működő vezérléssel." />
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
   <link rel="apple-touch-icon" href="assets/images/logo.png" />
   <link rel="stylesheet" href="assets/css/style.css?v=20261117_1" />
   <link rel="stylesheet" href="assets/css/tatami.css?v=20261117_1" />
+  <link rel="stylesheet" href="assets/css/fullscreen.css?v=20261121_1" />
 </head>
 <body>
-  <div class="app tatami-app">
+  <div class="app tatami-app" data-game-root data-start-button="btnTatamiStart">
     <header class="topbar">
       <div class="brand">
         <img class="logo" src="assets/images/logo.png" alt="FitDino logó" />
@@ -34,7 +35,8 @@
           <span class="hud-label">Pont</span>
           <span class="hud-value" id="tatamiScore">0</span>
         </div>
-        <button class="icon-btn" id="btnTatamiFullscreen" type="button" title="Teljes képernyő" aria-label="Teljes képernyő">⛶</button>
+        <button class="icon-btn screen-btn pause-btn" id="btnTatamiPause" type="button" aria-label="Szünet" aria-pressed="false" disabled>Ⅱ Szünet</button>
+        <button class="icon-btn screen-btn" id="btnTatamiFullscreen" data-fullscreen-toggle type="button" title="Teljes képernyő" aria-label="Teljes képernyő" aria-pressed="false">⛶ Teljes képernyő</button>
       </div>
     </header>
 
@@ -64,6 +66,7 @@
             </p>
             <div class="row">
               <button class="btn primary" id="btnTatamiStart" type="button">Kezdés</button>
+              <button class="btn primary" data-fullscreen-start type="button">Teljes képernyős játék</button>
               <button class="btn" id="btnTatamiHow" type="button">Irányítás</button>
             </div>
             <div class="help" id="tatamiHelp">
@@ -96,6 +99,7 @@
   </div>
 
   <script src="assets/js/privacy-notice.js?v=20261117_1"></script>
-  <script src="assets/js/tatami.js?v=20261117_1" defer></script>
+  <script src="assets/js/fullscreen.js?v=20261121_1" defer></script>
+  <script src="assets/js/tatami.js?v=20261121_1" defer></script>
 </body>
 </html>

@@ -120,3 +120,11 @@ A deploy nem másolja ki az alábbi repo/dokumentációs fájlokat az éles webm
 - Az rsync törléssel szemben védett a szerver által fenntartott `.well-known/` és `.htaccess` is. A deploy az rsync után a `scripts/configure-directory-index.sh` segítségével, a meglévő sorok megtartásával állítja be a FitDino saját `DirectoryIndex disabled` / `DirectoryIndex index.html` záróblokkját. Ez szükséges a szülő honlap PHP-kezdőlap-beállításának felülírásához.
 - A `scripts/` könyvtár nem kerülhet a publikus deploycélba. A kezdőlap-javítás nem ad PHP backendet a játékhoz.
 - Production smoke során a sima `/` címet is ellenőrizni kell; a közvetlen `/index.html` sikeres elérése önmagában kevés.
+
+## Mobilos teljes képernyő
+
+- A két játék közös fullscreen vezérlője az `assets/js/fullscreen.js`, stílusa az `assets/css/fullscreen.css`; a teljes `.app` legyen a fullscreen cél, hogy a HUD és a Tatami érintőgombjai is használhatók maradjanak.
+- Natív API hiányában vagy elutasításakor kitöltött nézet szükséges. Ez nem rejti el garantáltan a böngészősávokat; ne állítsunk teljes iPhone/Android kompatibilitást fizikai próba nélkül.
+- A Kilépés és Szünet/Folytatás érintéssel elérhető maradjon. Rendszerszintű fullscreen-kilépés és fallback Escape után a normál layout álljon vissza.
+- Méretezésnél a `fitdino:resize` esemény és ResizeObserver kezeli a canvas változásait; forgatáskor ne induljon új játék és ne vesszen el a pontszám.
+- A `tests/mobile_fullscreen_browser.py` ellenőrzi a két játékmódot három mobilmérettel, natív, hiányzó és elutasított API mellett. A böngészőteszt csak fejlesztési/CI függőséget használ; az éles játékhoz nincs új csomagfüggőség.

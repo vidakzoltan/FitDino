@@ -56,7 +56,27 @@ Az aldomain dokumentumgyökér-hozzárendelése külön WePanel-beállítás. A 
             └── utils.js
 ```
 
-## Tatami harc
+## Mobilos teljes képernyő
+
+Mindkét játék kezdőkártyáján a **Teljes képernyős játék** gomb nagyított nézetben
+indítja a játékot. A fejléc **Teljes képernyő** gombja játék közben is használható.
+A teljes `.app` kerül teljes képernyőbe: a pontszám/élet kijelzés, az érinthető
+**Szünet / Folytatás**, a **Kilépés** és a Tatami négy vezérlőgombja együtt marad.
+Az ismertetők és a navigáció ilyenkor nem vesznek el helyet a pályától.
+
+Ha a böngésző nem támogatja vagy elutasítja a Fullscreen API-t, a játék a látható
+böngészőterületet tölti ki; a böngésző saját sávjai ebben az esetben megmaradhatnak.
+Ez a nézet is kiléptethető a gombbal vagy Escape-pel. Natív teljes képernyőből
+rendszerszintű kilépéskor is visszaáll a normál nézet. A méretezés követi az
+elforgatást, a dinamikus képernyőmagasságot és a kijelző biztonsági margóit.
+
+Közös fájlok: `assets/js/fullscreen.js`, `assets/css/fullscreen.css`.
+A mobilos böngészőteszt futtatása a `tests/mobile_fullscreen_browser.py` elején
+található; a GitHub Actions mindkét játékot álló/fekvő méretben, natív, hiányzó
+és elutasított teljes képernyős API mellett ellenőrzi. Fizikai telefonos próba
+továbbra is szükséges a konkrét készülék böngészősávjainak ellenőrzéséhez.
+
+## Tatami harc vezérlése
 
 A Tatami harc az appon belüli külön mini-játék, külön `tatami.html` oldalon. Az `index.html` játékmódválasztója és a kezdő overlay gombja erre az oldalra mutat.
 

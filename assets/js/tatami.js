@@ -11,7 +11,7 @@
   const help = document.getElementById('tatamiHelp');
   const btnStart = document.getElementById('btnTatamiStart');
   const btnHow = document.getElementById('btnTatamiHow');
-  const btnFullscreen = document.getElementById('btnTatamiFullscreen');
+  const btnPause = document.getElementById('btnTatamiPause');
   const elDinoHp = document.getElementById('tatamiDinoHp');
   const elTurtleHp = document.getElementById('tatamiTurtleHp');
   const elScore = document.getElementById('tatamiScore');
@@ -81,6 +81,24 @@
     elScore.textContent = String(Math.floor(state.score));
   }
 
+  function syncPauseControl() {
+    if (!btnPause) return;
+    btnPause.disabled = !state.running || state.gameOver;
+    btnPause.textContent = state.paused ? '▶ Folytatás' : 'Ⅱ Szünet';
+    btnPause.setAttribute('aria-label', state.paused ? 'Folytatás' : 'Szünet');
+    btnPause.setAttribute('aria-pressed', String(state.paused));
+  }
+
+  function togglePause() {
+    if (!state.running || state.gameOver) return;
+    state.paused = !state.paused;
+    if (state.paused) {
+      keys.clear();
+      mobileHold.left = mobileHold.right = mobileHold.block = false;
+    }
+    syncPauseControl();
+  }
+
   function resizeCanvas() {
     const rect = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
@@ -141,6 +159,7 @@
     if (state.gameOver) resetGame();
     state.running = true;
     state.paused = false;
+    syncPauseControl();
     setOverlayVisible(false);
     if (document.activeElement === btnStart) canvas.focus({ preventScroll: true });
   }
@@ -149,6 +168,7 @@
     state.running = false;
     state.paused = false;
     state.gameOver = true;
+    syncPauseControl();
     if (winner === 'dino') {
       state.score += 120;
       state.message = 'FitDino győzött a tatamin.';
@@ -580,6 +600,7 @@
     keys.clear();
     mobileHold.left = mobileHold.right = mobileHold.block = false;
     if (state.running && !state.gameOver) state.paused = true;
+    syncPauseControl();
   }
 
   window.addEventListener('blur', pauseOnLeave);
@@ -600,13 +621,7 @@
       return;
     }
     if (!event.repeat && (event.key === 'p' || event.key === 'P')) {
-      if (state.running && !state.gameOver) {
-        state.paused = !state.paused;
-        if (state.paused) {
-          keys.clear();
-          mobileHold.left = mobileHold.right = mobileHold.block = false;
-        }
-      }
+      togglePause();
       return;
     }
     keys.add(event.key);
@@ -633,19 +648,11 @@
   });
 
   btnStart?.addEventListener('click', startGame);
+  btnPause?.addEventListener('click', togglePause);
   btnHow?.addEventListener('click', () => help?.classList.toggle('show'));
-  btnFullscreen?.addEventListener('click', async () => {
-    if (!wrap) return;
-    try {
-      if (!document.fullscreenElement) await wrap.requestFullscreen();
-      else await document.exitFullscreen();
-    } catch (error) {
-      state.message = 'A teljes képernyő nem érhető el.';
-      state.messageUntil = performance.now() + 1200;
-    }
-  });
-
   window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('fitdino:resize', resizeCanvas);
+  if (window.ResizeObserver) new ResizeObserver(resizeCanvas).observe(wrap);
   resizeCanvas();
   resetGame();
   requestAnimationFrame(loop);

@@ -20,6 +20,7 @@ jobs:
         run: |
           node --check assets/js/game.js
           node --check assets/js/tatami.js
+          node --check assets/js/fullscreen.js
           node --check assets/js/privacy-notice.js
           node --check assets/js/fitdino/constants.js
           node --check assets/js/fitdino/utils.js
@@ -28,3 +29,18 @@ jobs:
         run: |
           sh -n scripts/configure-directory-index.sh
           node --test tests/*.test.cjs
+
+  mobile-ui:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test tools
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Check mobile fullscreen and touch controls
+        run: python tests/mobile_fullscreen_browser.py
